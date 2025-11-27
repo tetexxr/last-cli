@@ -5,11 +5,12 @@ import inquirer from 'inquirer'
 import ora from 'ora'
 import { Command } from './types'
 import { commands } from './commands'
+import { getProjectRoot, promptForProjectRoot } from './config'
 
-const PROJECT_ROOT = '/Users/tete/work/last-app/git/last'
-
-async function main() {
+async function main(): Promise<void> {
   try {
+    const projectRoot = await getProjectRoot()
+
     const { selectedCommand } = await inquirer.prompt([
       {
         type: 'list',
@@ -23,12 +24,7 @@ async function main() {
       }
     ])
 
-    if (selectedCommand.command === 'exit') {
-      console.log('Exit Last CLI')
-      process.exit(0)
-    }
-
-    await executeCommand(selectedCommand)
+    await executeCommand(selectedCommand, projectRoot)
   } catch (error) {
     if (error instanceof Error) {
       console.error('Error:', error.message)
@@ -37,25 +33,34 @@ async function main() {
   }
 }
 
-async function executeCommand(cmd: Command) {
-  if (cmd.requiresConfirmation) {
-    const confirmed = await confirm(cmd)
+async function executeCommand(command: Command, projectRoot: string): Promise<void> {
+  if (command.requiresConfirmation) {
+    const confirmed = await confirm(command)
     if (!confirmed) {
       console.log('Operation cancelled')
       return
     }
   }
+  if (command.command === 'exit') {
+    console.log('Exit Last CLI')
+    process.exit(0)
+  }
+  if (command.command === '__change_project_root__') {
+    const updated = await promptForProjectRoot(projectRoot)
+    console.log(`Project root updated to: ${updated}`)
+    return
+  }
 
-  const spinner = ora(`Executing: ${cmd.name}`).start()
+  const spinner = ora(`Executing: ${command.name}`).start()
   try {
-    execSync(cmd.command, {
+    execSync(command.command, {
       stdio: 'inherit',
       shell: '/bin/zsh',
-      cwd: PROJECT_ROOT
+      cwd: projectRoot
     })
-    spinner.succeed(`${cmd.name} completed successfully`)
+    spinner.succeed(`${command.name} completed successfully`)
   } catch (error) {
-    spinner.fail(`${cmd.name} failed`)
+    spinner.fail(`${command.name} failed`)
     if (error instanceof Error) {
       console.error('Error:', error.message)
     }
@@ -63,7 +68,7 @@ async function executeCommand(cmd: Command) {
   }
 }
 
-async function confirm(cmd: Command) {
+async function confirm(cmd: Command): Promise<boolean> {
   const { confirmed } = await inquirer.prompt([
     {
       type: 'confirm',
