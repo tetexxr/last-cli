@@ -5,4 +5,4 @@ SCRIPT_PATH="$(readlink -f "$0" 2>/dev/null || readlink "$0" 2>/dev/null || echo
 SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 
 # Execute the TypeScript file using tsx
-cd "$SCRIPT_DIR" && npx tsx last.ts
+cd "$SCRIPT_DIR" && npx tsx app.ts
