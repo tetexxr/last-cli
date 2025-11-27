@@ -50,6 +50,11 @@ export const commands: Command[] = [
     command: 'last-scripts tunnel mysql'
   },
   {
+    name: 'Change Last project root path',
+    description: 'Update the project root path used by this CLI',
+    command: '__change_project_root__'
+  },
+  {
     name: 'Quit',
     description: 'Exit the program',
     command: 'exit'
