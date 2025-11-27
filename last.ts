@@ -24,7 +24,7 @@ async function main() {
     ])
 
     if (selectedCommand.command === 'exit') {
-      console.log('Exit last-cli')
+      console.log('Exit Last CLI')
       process.exit(0)
     }
 
