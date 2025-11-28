@@ -1,6 +1,6 @@
-export type Command = {
+export type Option = {
   name: string
   description: string
-  command: string
   requiresConfirmation?: boolean
+  commands: string[]
 }

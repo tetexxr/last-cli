@@ -3,29 +3,29 @@ import { execSync } from 'child_process'
 
 import inquirer from 'inquirer'
 import ora from 'ora'
-import { Command } from './types'
+import { Option } from './types'
 import chalk from 'chalk'
-import { commands } from './commands'
+import { options } from './options'
 import { getProjectRoot, promptForProjectRoot } from './config'
 
 async function main(): Promise<void> {
   try {
     const projectRoot = await getProjectRoot()
 
-    const { selectedCommand } = await inquirer.prompt([
+    const { selectedOption } = await inquirer.prompt([
       {
         type: 'list',
-        name: 'selectedCommand',
-        message: 'Select a command to execute:',
-        choices: commands.map(cmd => ({
-          name: cmd.name,
-          value: cmd
+        name: 'selectedOption',
+        message: 'Select an option to execute:',
+        choices: options.map(option => ({
+          name: option.name,
+          value: option
         })),
         pageSize: 15
       }
     ])
 
-    await executeCommand(selectedCommand, projectRoot)
+    await executeOption(selectedOption, projectRoot)
   } catch (error) {
     if (error instanceof Error) {
       console.error('Error:', error.message)
@@ -34,43 +34,42 @@ async function main(): Promise<void> {
   }
 }
 
-async function executeCommand(cmd: Command, projectRoot: string): Promise<void> {
-  if (cmd.description) {
-    console.log(cmd.description)
+async function executeOption(option: Option, projectRoot: string): Promise<void> {
+  if (option.description) {
+    console.log(option.description)
   }
-  if (cmd.requiresConfirmation) {
-    const confirmed = await confirm(cmd)
+  if (option.requiresConfirmation) {
+    const confirmed = await confirm(option)
     if (!confirmed) {
       console.log('Operation cancelled')
       process.exit(0)
     }
   }
-  if (cmd.command === '__help__') {
-    commands.forEach(cmd => {
-      console.log(`\n${chalk.white.bold(cmd.name)}\n  ${cmd.description}`)
-    })
+  const cmd = option.commands[0]
+  if (cmd === '__help__') {
+    options.forEach(option =>
+      console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`)
+    )
     process.exit(0)
   }
-
-  if (cmd.command === '__exit__') {
+  if (cmd === '__exit__') {
     process.exit(0)
   }
-  if (cmd.command === '__change_project_root__') {
+  if (cmd === '__change_project_root__') {
     const updated = await promptForProjectRoot(projectRoot)
     console.log(`Project root updated to: ${updated}`)
     process.exit(0)
   }
-
-  const spinner = ora(`Executing: ${cmd.name}`).start()
+  const spinner = ora(`Executing: ${option.name}`).start()
   try {
-    execSync(cmd.command, {
+    execSync(cmd, {
       stdio: 'inherit',
       shell: '/bin/zsh',
       cwd: projectRoot
     })
-    spinner.succeed(`${cmd.name} completed successfully`)
+    spinner.succeed(`${option.name} completed successfully`)
   } catch (error) {
-    spinner.fail(`${cmd.name} failed`)
+    spinner.fail(`${option.name} failed`)
     if (error instanceof Error) {
       console.error('Error:', error.message)
     }
@@ -78,12 +77,12 @@ async function executeCommand(cmd: Command, projectRoot: string): Promise<void> 
   }
 }
 
-async function confirm(cmd: Command): Promise<boolean> {
+async function confirm(option: Option): Promise<boolean> {
   const { confirmed } = await inquirer.prompt([
     {
       type: 'confirm',
       name: 'confirmed',
-      message: `This will execute "${cmd.name}". Are you sure?`,
+      message: `This will execute "${option.name}". Are you sure?`,
       default: false
     }
   ])
