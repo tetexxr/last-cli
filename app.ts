@@ -17,7 +17,10 @@ async function main(): Promise<void> {
         type: 'list',
         name: 'selectedCommand',
         message: 'Select a command to execute:',
-        choices: commands.map((cmd) => ({ name: cmd.name, value: cmd })),
+        choices: commands.map(cmd => ({
+          name: cmd.name,
+          value: cmd
+        })),
         pageSize: 15
       }
     ])
@@ -43,7 +46,7 @@ async function executeCommand(cmd: Command, projectRoot: string): Promise<void> 
     }
   }
   if (cmd.command === '__help__') {
-    commands.forEach((cmd) => {
+    commands.forEach(cmd => {
       console.log(`\n${chalk.white.bold(cmd.name)}\n  ${cmd.description}`)
     })
     process.exit(0)
