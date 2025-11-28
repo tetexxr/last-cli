@@ -8,41 +8,52 @@ export const commands: Command[] = [
     requiresConfirmation: true
   },
   {
-    name: 'Migrate Dev',
+    name: 'Migrate dev',
     description: 'Run migrations on dev database',
     command: 'last-scripts localdb migrate dev'
   },
   {
-    name: 'Migrate Test',
+    name: 'Migrate test',
     description: 'Run migrations on test database',
     command: 'last-scripts localdb migrate test'
   },
   {
-    name: 'Recreate Database Dev',
+    name: 'Recreate dev database',
     description: 'Drop and recreate dev database',
-    command: 'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;" && last-scripts localdb init dev',
+    command:
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;" && last-scripts localdb init dev',
     requiresConfirmation: true
   },
   {
-    name: 'Recreate Database Test',
+    name: 'Recreate test database',
     description: 'Drop and recreate test database',
-    command: 'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test',
+    command:
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test',
     requiresConfirmation: true
   },
   {
-    name: 'Run All',
-    description: 'Run all services',
-    command: 'last_run_all'
-  },
-  {
-    name: 'Run Local',
-    description: 'Run local setup',
-    command: '~/work/last-app/other-last-app/personal/runner/run-last.sh'
-  },
-  {
-    name: 'Run Tests',
-    description: 'Run tests',
+    name: 'Test',
+    description:
+      'Prepare the entire setup and run all tests:' +
+      '\n  - Delete OpenAPI folders' +
+      '\n  - Install and update dependencies' +
+      '\n  - Recreate test database' +
+      '\n  - Run migrations on test database' +
+      '\n  - Generate Kysely type definitions' +
+      '\n  - Generate OpenAPI client libraries' +
+      '\n  - And run unit and integration test for Server',
     command: 'last_run_tests'
+  },
+  {
+    name: 'Launch all',
+    description:
+      'Launch all services and applications:' +
+      '\n  - Kafka' +
+      '\n  - Server' +
+      '\n  - Support' +
+      '\n  - Admin' +
+      '\n  - POS',
+    command: '~/work/last-app/other-last-app/personal/runner/run-last.sh'
   },
   {
     name: 'Tunnel MySQL',
@@ -50,8 +61,8 @@ export const commands: Command[] = [
     command: 'last-scripts tunnel mysql'
   },
   {
-    name: 'Change Last project root path',
-    description: 'Update the project root path used by this CLI',
+    name: 'Change project root path',
+    description: 'Update the Last project root path used by this CLI',
     command: '__change_project_root__'
   },
   {

@@ -17,7 +17,7 @@ async function main(): Promise<void> {
         name: 'selectedCommand',
         message: 'Select a command to execute:',
         choices: commands.map((cmd) => ({
-          name: `${cmd.name} - ${cmd.description}`,
+          name: cmd.name,
           value: cmd
         })),
         pageSize: 15
@@ -33,34 +33,37 @@ async function main(): Promise<void> {
   }
 }
 
-async function executeCommand(command: Command, projectRoot: string): Promise<void> {
-  if (command.requiresConfirmation) {
-    const confirmed = await confirm(command)
+async function executeCommand(cmd: Command, projectRoot: string): Promise<void> {
+  if (cmd.description) {
+    console.log(cmd.description)
+  }
+  if (cmd.requiresConfirmation) {
+    const confirmed = await confirm(cmd)
     if (!confirmed) {
       console.log('Operation cancelled')
       return
     }
   }
-  if (command.command === 'exit') {
+  if (cmd.command === 'exit') {
     console.log('Exit Last CLI')
     process.exit(0)
   }
-  if (command.command === '__change_project_root__') {
+  if (cmd.command === '__change_project_root__') {
     const updated = await promptForProjectRoot(projectRoot)
     console.log(`Project root updated to: ${updated}`)
     return
   }
 
-  const spinner = ora(`Executing: ${command.name}`).start()
+  const spinner = ora(`Executing: ${cmd.name}`).start()
   try {
-    execSync(command.command, {
+    execSync(cmd.command, {
       stdio: 'inherit',
       shell: '/bin/zsh',
       cwd: projectRoot
     })
-    spinner.succeed(`${command.name} completed successfully`)
+    spinner.succeed(`${cmd.name} completed successfully`)
   } catch (error) {
-    spinner.fail(`${command.name} failed`)
+    spinner.fail(`${cmd.name} failed`)
     if (error instanceof Error) {
       console.error('Error:', error.message)
     }
