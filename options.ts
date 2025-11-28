@@ -88,6 +88,13 @@ export const options: Option[] = [
     ]
   },
   {
+    name: 'Update',
+    description: 'Update the Last CLI tool from git repository',
+    commands: [
+      '__update__'
+    ]
+  },
+  {
     name: 'Help',
     description: 'Show all commands and their descriptions',
     commands: [
