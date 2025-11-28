@@ -66,8 +66,13 @@ export const commands: Command[] = [
     command: '__change_project_root__'
   },
   {
+    name: 'Help',
+    description: 'Show all commands and their descriptions',
+    command: '__help__'
+  },
+  {
     name: 'Quit',
-    description: 'Exit the program',
-    command: 'exit'
+    description: 'Exit Last CLI',
+    command: '__exit__'
   }
 ]

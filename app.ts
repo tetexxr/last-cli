@@ -16,10 +16,7 @@ async function main(): Promise<void> {
         type: 'list',
         name: 'selectedCommand',
         message: 'Select a command to execute:',
-        choices: commands.map((cmd) => ({
-          name: cmd.name,
-          value: cmd
-        })),
+        choices: commands.map((cmd) => ({ name: cmd.name, value: cmd })),
         pageSize: 15
       }
     ])
@@ -41,17 +38,23 @@ async function executeCommand(cmd: Command, projectRoot: string): Promise<void> 
     const confirmed = await confirm(cmd)
     if (!confirmed) {
       console.log('Operation cancelled')
-      return
+      process.exit(0)
     }
   }
-  if (cmd.command === 'exit') {
-    console.log('Exit Last CLI')
+  if (cmd.command === '__help__') {
+    commands.forEach((cmd) => {
+      console.log(`\n${cmd.name}\n  ${cmd.description}`)
+    })
+    process.exit(0)
+  }
+
+  if (cmd.command === '__exit__') {
     process.exit(0)
   }
   if (cmd.command === '__change_project_root__') {
     const updated = await promptForProjectRoot(projectRoot)
     console.log(`Project root updated to: ${updated}`)
-    return
+    process.exit(0)
   }
 
   const spinner = ora(`Executing: ${cmd.name}`).start()
