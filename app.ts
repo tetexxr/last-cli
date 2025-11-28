@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 import { execSync } from 'child_process'
+import path from 'path'
 
 import inquirer from 'inquirer'
 import ora from 'ora'
-import { Command, CommandEntry, Option } from './types'
-import path from 'path'
+import { Command, CommandEntry, Config, Option } from './types'
 import chalk from 'chalk'
 import { options } from './options'
-import { getProjectRoot, promptForProjectRoot } from './config'
+import * as config from './config'
 
 async function main(): Promise<void> {
   try {
-    const projectRoot = await getProjectRoot()
+    const configuration = await loadConfiguration()
+    autoUpdate(configuration)
 
     const { selectedOption } = await inquirer.prompt([
       {
@@ -26,12 +27,38 @@ async function main(): Promise<void> {
       }
     ])
 
-    await executeOption(selectedOption, projectRoot)
+    await executeOption(selectedOption, configuration.projectRoot)
   } catch (error) {
     if (error instanceof Error) {
       console.error('Error:', error.message)
     }
     throw error
+  }
+}
+
+async function loadConfiguration(): Promise<Config> {
+  const configuration = config.loadConfig()
+  if (configuration) {
+    return configuration
+  }
+  const projectRoot = await config.promptForProjectRoot()
+  const newConfig: Config = {
+    projectRoot: projectRoot,
+    lastUpdateDate: new Date().toISOString()
+  }
+  config.saveConfig(newConfig)
+  return newConfig
+}
+
+function autoUpdate(configuration: Config | null) {
+  if (config.shouldAutoUpdate(configuration)) {
+    const spinner = ora('Checking for updates...').start()
+    const success = config.performUpdate()
+    if (success) {
+      spinner.succeed('Project updated successfully')
+    } else {
+      spinner.warn('Auto-update failed, continuing...')
+    }
   }
 }
 
@@ -63,8 +90,19 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
       }
       if (command.cmd === '__change_project_root__') {
         spinner.stop()
-        const updated = await promptForProjectRoot(projectRoot)
+        const updated = await config.promptForProjectRoot(projectRoot)
         console.log(`Project root updated to: ${updated}`)
+        process.exit(0)
+      }
+      if (command.cmd === '__update__') {
+        spinner.stop()
+        const updateSpinner = ora('Updating Last CLI...').start()
+        const success = config.performUpdate()
+        if (success) {
+          updateSpinner.succeed('Last CLI updated successfully')
+        } else {
+          updateSpinner.fail('Update failed')
+        }
         process.exit(0)
       }
 
