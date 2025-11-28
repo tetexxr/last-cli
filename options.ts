@@ -51,7 +51,15 @@ export const options: Option[] = [
       '\n  - Generate OpenAPI client libraries' +
       '\n  - And run unit and integration test for Server',
     commands: [
-      'last_run_tests'
+      'cd ~/work/last-app/git/last/server',
+      'find . -type d -path "*/src/openapi" -exec rm -rf {} +',
+      'yarn install',
+      'yarn up',
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test',
+      'last-scripts localdb migrate test',
+      'yarn kysely-codegen',
+      'yarn openapi',
+      'yarn test-all'
     ]
   },
   {

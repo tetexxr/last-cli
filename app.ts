@@ -45,35 +45,37 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
       process.exit(0)
     }
   }
-  const cmd = option.commands[0]
-  if (cmd === '__help__') {
-    options.forEach(option =>
-      console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`)
-    )
-    process.exit(0)
-  }
-  if (cmd === '__exit__') {
-    process.exit(0)
-  }
-  if (cmd === '__change_project_root__') {
-    const updated = await promptForProjectRoot(projectRoot)
-    console.log(`Project root updated to: ${updated}`)
-    process.exit(0)
-  }
-  const spinner = ora(`Executing: ${option.name}`).start()
-  try {
-    execSync(cmd, {
-      stdio: 'inherit',
-      shell: '/bin/zsh',
-      cwd: projectRoot
-    })
-    spinner.succeed(`${option.name} completed successfully`)
-  } catch (error) {
-    spinner.fail(`${option.name} failed`)
-    if (error instanceof Error) {
-      console.error('Error:', error.message)
+  for (const cmd of option.commands) {
+    if (cmd === '__help__') {
+      options.forEach(option =>
+        console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`)
+      )
+      process.exit(0)
     }
-    process.exit(1)
+    if (cmd === '__exit__') {
+      process.exit(0)
+    }
+    if (cmd === '__change_project_root__') {
+      const updated = await promptForProjectRoot(projectRoot)
+      console.log(`Project root updated to: ${updated}`)
+      process.exit(0)
+    }
+
+    const spinner = ora(`Executing: ${option.name}`).start()
+    try {
+      execSync(cmd, {
+        stdio: 'inherit',
+        shell: '/bin/zsh',
+        cwd: projectRoot
+      })
+      spinner.succeed(`${option.name} completed successfully`)
+    } catch (error) {
+      spinner.fail(`${option.name} failed`)
+      if (error instanceof Error) {
+        console.error('Error:', error.message)
+      }
+      process.exit(1)
+    }
   }
 }
 
