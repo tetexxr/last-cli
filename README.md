@@ -4,27 +4,20 @@ Interactive CLI to run common Last tasks from anywhere.
 
 ## Install
 
+To install Last CLI, run:
+
 ```bash
-cd ~/bin/last-cli
-npm install
-./install.sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/tetexxr/last-cli/master/install.sh)"
 ```
 
-- Creates symlink `last` at `/usr/local/bin/last` -> `~/bin/last-cli/last.sh`
-- After install, run `which last` and `last` to open the menu
+- This will clone the repository to `~/.last-cli`, install dependencies, and create a symlink `last` at `/usr/local/bin/last` pointing to `~/.last-cli/last.sh`.
+- After install, run `which last` and `last` to open the menu.
 
 ## Uninstall
 
 ```bash
-cd ~/bin/last-cli
-./uninstall.sh
-# or
 sudo rm /usr/local/bin/last
-```
-
-To remove everything:
-```bash
-rm -rf ~/bin/last-cli
+rm -rf ~/.last-cli
 ```
 
 ## Usage and commands
@@ -51,13 +44,14 @@ export PATH="/usr/local/bin:$PATH"  # add to .zshrc
 source ~/.zshrc                     # reload .zshrc
 ```
 
+
 Permission denied: make scripts executable.
 ```bash
-chmod +x ~/bin/last-cli/*.sh
+chmod +x ~/.last-cli/*.sh
 ```
 
 Dependencies missing: install npm packages.
 ```bash
-cd ~/bin/last-cli
+cd ~/.last-cli
 npm install
 ```
