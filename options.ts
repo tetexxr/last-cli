@@ -6,7 +6,7 @@ export const options: Option[] = [
     description: 'Delete all OpenAPI generated files',
     requiresConfirmation: true,
     commands: [
-      'find . -type d -path "*/src/openapi" -exec rm -rf {} +'
+      { cmd: 'find . -type d -path "*/src/openapi" -exec rm -rf {} +', cwd: 'server' }
     ]
   },
   {
@@ -49,17 +49,16 @@ export const options: Option[] = [
       '\n  - Run migrations on test database' +
       '\n  - Generate Kysely type definitions' +
       '\n  - Generate OpenAPI client libraries' +
-      '\n  - And run unit and integration test for Server',
+      '\n  - Run unit and integration test for Server',
     commands: [
-      'cd ~/work/last-app/git/last/server',
-      'find . -type d -path "*/src/openapi" -exec rm -rf {} +',
-      'yarn install',
-      'yarn up',
+      { cmd: 'find . -type d -path "*/src/openapi" -exec rm -rf {} +', cwd: 'server' },
+      { cmd: 'yarn install', cwd: 'server' },
+      { cmd: 'yarn up', cwd: 'server' },
       'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test',
       'last-scripts localdb migrate test',
-      'yarn kysely-codegen',
-      'yarn openapi',
-      'yarn test-all'
+      { cmd: 'yarn kysely-codegen', cwd: 'server' },
+      { cmd: 'yarn openapi', cwd: 'server' },
+      { cmd: 'yarn test-all', cwd: 'server' }
     ]
   },
   {
@@ -98,7 +97,7 @@ export const options: Option[] = [
   },
   {
     name: 'Quit',
-    description: 'Exit the program',
+    description: 'Exit Last CLI',
     commands: [
       '__exit__'
     ]

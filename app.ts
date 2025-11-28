@@ -3,7 +3,7 @@ import { execSync } from 'child_process'
 
 import inquirer from 'inquirer'
 import ora from 'ora'
-import { Option } from './types'
+import { Command, CommandEntry, Option } from './types'
 import chalk from 'chalk'
 import { options } from './options'
 import { getProjectRoot, promptForProjectRoot } from './config'
@@ -45,17 +45,17 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
       process.exit(0)
     }
   }
-  for (const cmd of option.commands) {
-    if (cmd === '__help__') {
-      options.forEach(option =>
-        console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`)
-      )
+  for (const commandEntry of option.commands) {
+    const command = toCommand(commandEntry, projectRoot)
+
+    if (command.cmd === '__help__') {
+      options.forEach(option => console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`))
       process.exit(0)
     }
-    if (cmd === '__exit__') {
+    if (command.cmd === '__exit__') {
       process.exit(0)
     }
-    if (cmd === '__change_project_root__') {
+    if (command.cmd === '__change_project_root__') {
       const updated = await promptForProjectRoot(projectRoot)
       console.log(`Project root updated to: ${updated}`)
       process.exit(0)
@@ -63,10 +63,10 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
 
     const spinner = ora(`Executing: ${option.name}`).start()
     try {
-      execSync(cmd, {
+      execSync(command.cmd, {
         stdio: 'inherit',
         shell: '/bin/zsh',
-        cwd: projectRoot
+        cwd: command.cwd
       })
       spinner.succeed(`${option.name} completed successfully`)
     } catch (error) {
@@ -75,6 +75,20 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
         console.error('Error:', error.message)
       }
       process.exit(1)
+    }
+  }
+}
+
+function toCommand(commandEntry: CommandEntry, projectRoot: string): Command {
+  if (typeof commandEntry === 'string') {
+    return {
+      cmd: commandEntry,
+      cwd: projectRoot
+    }
+  } else {
+    return {
+      cmd: commandEntry.cmd,
+      cwd: `${projectRoot}/${commandEntry.cwd}`
     }
   }
 }

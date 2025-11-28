@@ -2,5 +2,12 @@ export type Option = {
   name: string
   description: string
   requiresConfirmation?: boolean
-  commands: string[]
+  commands: CommandEntry[]
+}
+
+export type CommandEntry = string | Command
+
+export type Command = {
+  cmd: string
+  cwd?: string
 }
