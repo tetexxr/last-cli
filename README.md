@@ -7,6 +7,7 @@ Interactive CLI to run common Last tasks from anywhere.
 Install node.js
 ```bash
 brew install node@24
+echo 'export PATH="/opt/homebrew/opt/node@24/bin:$PATH"' >> ~/.zshrc
 ```
 
 ## Install
