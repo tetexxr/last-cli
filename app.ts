@@ -4,6 +4,7 @@ import { execSync } from 'child_process'
 import inquirer from 'inquirer'
 import ora from 'ora'
 import { Command } from './types'
+import chalk from 'chalk'
 import { commands } from './commands'
 import { getProjectRoot, promptForProjectRoot } from './config'
 
@@ -43,7 +44,7 @@ async function executeCommand(cmd: Command, projectRoot: string): Promise<void> 
   }
   if (cmd.command === '__help__') {
     commands.forEach((cmd) => {
-      console.log(`\n${cmd.name}\n  ${cmd.description}`)
+      console.log(`\n${chalk.white.bold(cmd.name)}\n  ${cmd.description}`)
     })
     process.exit(0)
   }
