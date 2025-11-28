@@ -4,7 +4,6 @@ export const options: Option[] = [
   {
     name: 'Delete OpenAPI',
     description: 'Delete all OpenAPI generated files',
-    requiresConfirmation: true,
     commands: [
       { cmd: 'find . -type d -path "*/src/openapi" -exec rm -rf {} +', cwd: 'server' }
     ]
