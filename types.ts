@@ -11,3 +11,8 @@ export type Command = {
   cmd: string
   cwd?: string
 }
+
+export type Config = {
+  projectRoot: string
+  lastUpdateDate: string
+}
