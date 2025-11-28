@@ -74,7 +74,7 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
         cwd: command.cwd
       })
     }
-    spinner.succeed(`${option.name} completed successfully`)
+    spinner.succeed(`${option.name} completed`)
   } catch (error) {
     spinner.fail(`${option.name} failed`)
     if (error instanceof Error) {
