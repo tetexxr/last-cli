@@ -47,7 +47,7 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
     }
   }
 
-  const spinner = ora(`Executing: ${option.name}`).start()
+  const spinner = ora(`Executing: ${option.name}\n`).start()
   try {
     for (const commandEntry of option.commands) {
       const command = toCommand(commandEntry, projectRoot)
