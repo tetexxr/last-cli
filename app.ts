@@ -46,37 +46,41 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
       process.exit(0)
     }
   }
-  for (const commandEntry of option.commands) {
-    const command = toCommand(commandEntry, projectRoot)
 
-    if (command.cmd === '__help__') {
-      options.forEach(option => console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`))
-      process.exit(0)
-    }
-    if (command.cmd === '__exit__') {
-      process.exit(0)
-    }
-    if (command.cmd === '__change_project_root__') {
-      const updated = await promptForProjectRoot(projectRoot)
-      console.log(`Project root updated to: ${updated}`)
-      process.exit(0)
-    }
+  const spinner = ora(`Executing: ${option.name}`).start()
+  try {
+    for (const commandEntry of option.commands) {
+      const command = toCommand(commandEntry, projectRoot)
 
-    const spinner = ora(`Executing: ${option.name}`).start()
-    try {
+      if (command.cmd === '__help__') {
+        spinner.stop()
+        options.forEach(option => console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`))
+        process.exit(0)
+      }
+      if (command.cmd === '__exit__') {
+        spinner.stop()
+        process.exit(0)
+      }
+      if (command.cmd === '__change_project_root__') {
+        spinner.stop()
+        const updated = await promptForProjectRoot(projectRoot)
+        console.log(`Project root updated to: ${updated}`)
+        process.exit(0)
+      }
+
       execSync(command.cmd, {
         stdio: 'inherit',
         shell: '/bin/zsh',
         cwd: command.cwd
       })
-      spinner.succeed(`${option.name} completed successfully`)
-    } catch (error) {
-      spinner.fail(`${option.name} failed`)
-      if (error instanceof Error) {
-        console.error('Error:', error.message)
-      }
-      process.exit(1)
     }
+    spinner.succeed(`${option.name} completed successfully`)
+  } catch (error) {
+    spinner.fail(`${option.name} failed`)
+    if (error instanceof Error) {
+      console.error('Error:', error.message)
+    }
+    process.exit(1)
   }
 }
 
