@@ -4,6 +4,7 @@ import { execSync } from 'child_process'
 import inquirer from 'inquirer'
 import ora from 'ora'
 import { Command, CommandEntry, Option } from './types'
+import path from 'path'
 import chalk from 'chalk'
 import { options } from './options'
 import { getProjectRoot, promptForProjectRoot } from './config'
@@ -88,7 +89,7 @@ function toCommand(commandEntry: CommandEntry, projectRoot: string): Command {
   } else {
     return {
       cmd: commandEntry.cmd,
-      cwd: `${projectRoot}/${commandEntry.cwd}`
+      cwd: path.join(projectRoot, commandEntry.cwd ?? '')
     }
   }
 }
