@@ -2,6 +2,13 @@
 
 Interactive CLI to run common Last tasks from anywhere.
 
+## Prerequisites
+
+Install node.js
+```bash
+brew install node@24
+```
+
 ## Install
 
 To install Last CLI, run:
@@ -24,16 +31,30 @@ rm -rf ~/.last-cli
 
 Run `last` and pick from the menu:
 
-- Delete OpenAPI: remove all generated OpenAPI files (confirms)
-- Migrate Dev: run migrations on dev database
-- Migrate Test: run migrations on test database
-- Recreate Database Dev: drop and recreate dev database (confirms)
-- Recreate Database Test: drop and recreate test database (confirms)
-- Run All: start all services
-- Run Local: start local setup
-- Run Tests: run test suite
-- Tunnel MySQL: open SSH tunnel to MySQL
-- Quit: exit the CLI
+- **Delete OpenAPI**: Delete all OpenAPI generated files
+- **Migrate dev**: Run migrations on dev database
+- **Migrate test**: Run migrations on test database
+- **Recreate dev database**: Drop and recreate dev database (requires confirmation)
+- **Recreate test database**: Drop and recreate test database (requires confirmation)
+- **Test**: Prepare the entire setup and run all tests:
+  - Delete OpenAPI folders
+  - Install and update dependencies
+  - Recreate test database
+  - Run migrations on test database
+  - Generate Kysely type definitions
+  - Generate OpenAPI client libraries
+  - Run unit and integration test for Server
+- **Launch all**: Launch all services and applications:
+  - Kafka
+  - Server
+  - Support
+  - Admin
+  - POS
+- **Tunnel MySQL**: Create SSH tunnel to MySQL
+- **Change project root path**: Update the Last project root path used by this CLI
+- **Update**: Update the Last CLI tool from git repository
+- **Help**: Show all commands and their descriptions
+- **Quit**: Exit Last CLI
 
 ## Troubleshooting
 
