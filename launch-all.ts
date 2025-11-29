@@ -1,7 +1,7 @@
-import { execSync, spawn } from 'child_process'
+import { ChildProcess, execSync, spawn } from 'child_process'
 import { fileURLToPath } from 'url'
 import path from 'path'
-import readline from 'readline'
+import readline, { Key } from 'readline'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -80,7 +80,7 @@ export async function runServerManager(projectRoot: string): Promise<void> {
     process.stdin.setRawMode(true)
   }
 
-  let yarnProcess: any = null
+  let yarnProcess: ChildProcess | null = null
   let autoRestart = true
 
   // Function to start the yarn dev process
@@ -147,7 +147,7 @@ export async function runServerManager(projectRoot: string): Promise<void> {
   }
 
   // Handle key presses
-  process.stdin.on('keypress', async (_str: any, key: any) => {
+  process.stdin.on('keypress', async (_str: string, key: Key) => {
     if (!key) return
 
     // Ctrl+C - Exit the script
