@@ -8,6 +8,7 @@ import { Command, CommandEntry, Config, Option } from './types'
 import chalk from 'chalk'
 import { options } from './options'
 import * as config from './config'
+import { launchAll } from './launch-all'
 
 async function main(): Promise<void> {
   try {
@@ -103,6 +104,11 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
         } else {
           updateSpinner.fail('Update failed')
         }
+        process.exit(0)
+      }
+      if (command.cmd === '__launch_all__') {
+        spinner.stop()
+        launchAll(projectRoot)
         process.exit(0)
       }
 

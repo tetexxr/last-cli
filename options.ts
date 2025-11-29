@@ -70,7 +70,7 @@ export const options: Option[] = [
       '\n  - Admin' +
       '\n  - POS',
     commands: [
-      '~/work/last-app/other-last-app/personal/runner/run-last.sh'
+      '__launch_all__'
     ]
   },
   {
