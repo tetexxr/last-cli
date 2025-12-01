@@ -57,6 +57,10 @@ Run `last` and pick from the menu:
 - **Help**: Show all commands and their descriptions
 - **Quit**: Exit Last CLI
 
+## Auto update
+
+The application automatically updates itself when it starts up if it has been one month (or more) since the last update.
+
 ## Troubleshooting
 
 Command not found: ensure `/usr/local/bin` is in `PATH`.
