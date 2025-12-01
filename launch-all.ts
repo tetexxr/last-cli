@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 
 export function launchAll(projectRoot: string): void {
   console.log('Launching all Last services in iTerm...')
-  
+
   const appleScript = `
     tell application "iTerm"
       activate
@@ -47,7 +47,7 @@ export function launchAll(projectRoot: string): void {
       stdio: ['pipe', 'inherit', 'inherit'],
       shell: '/bin/zsh'
     })
-    
+
     console.log('All services launched successfully!')
     console.log('\nCheck your iTerm window for the following tabs:')
     console.log('  • Kafka (events-processor-dev)')
@@ -103,7 +103,7 @@ export async function runServerManager(projectRoot: string): Promise<void> {
 
   // Function to stop the current process
   function stopProcess(): Promise<boolean> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (yarnProcess) {
         console.log('Stopping current process...')
         autoRestart = false
@@ -125,7 +125,7 @@ export async function runServerManager(projectRoot: string): Promise<void> {
     console.log('Running yarn openapi...')
     const openApiProcess = spawn('yarn', ['openapi'], { stdio: 'inherit' })
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       openApiProcess.on('close', () => {
         console.log('Yarn openapi completed.')
         resolve()
@@ -138,7 +138,7 @@ export async function runServerManager(projectRoot: string): Promise<void> {
     console.log('Running migrations...')
     const migrationsProcess = spawn('yarn', ['knex', 'migrate:latest'], { stdio: 'inherit' })
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       migrationsProcess.on('close', () => {
         console.log('Migrations completed.')
         resolve()
@@ -194,7 +194,7 @@ export async function runServerManager(projectRoot: string): Promise<void> {
 // CLI entry point when run directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2)
-  
+
   if (args[0] === '--server-manager' && args[1]) {
     runServerManager(args[1])
   }
