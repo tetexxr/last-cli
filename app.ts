@@ -121,7 +121,11 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
       })
     }
     spinner.succeed(`${option.name} completed`)
-  } catch (error) {
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'signal' in error && error.signal === 'SIGINT') {
+      spinner.info(`${option.name} stopped`)
+      process.exit(0)
+    }
     spinner.fail(`${option.name} failed`)
     if (error instanceof Error) {
       console.error('Error:', error.message)
