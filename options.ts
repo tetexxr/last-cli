@@ -101,7 +101,9 @@ export const options: Option[] = [
     name: 'Update',
     description: 'Update the Last CLI tool from git repository',
     commands: [
-      '__update__'
+      { cmd: 'git pull origin master', cwd: '__cli_dir__' },
+      { cmd: 'npm install', cwd: '__cli_dir__' },
+      '__set_last_update_date__'
     ]
   },
   {

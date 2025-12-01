@@ -9,11 +9,15 @@ import chalk from 'chalk'
 import { options } from './options'
 import * as config from './config'
 import { launchAll } from './launch-all'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 async function main(): Promise<void> {
   try {
     const configuration = await loadConfiguration()
-    autoUpdate(configuration)
+    await autoUpdate(configuration)
 
     const { selectedOption } = await inquirer.prompt([
       {
@@ -51,13 +55,18 @@ async function loadConfiguration(): Promise<Config> {
   return newConfig
 }
 
-function autoUpdate(configuration: Config | null) {
+async function autoUpdate(configuration: Config | null): Promise<void> {
   if (config.shouldAutoUpdate(configuration)) {
-    const spinner = ora('Checking for updates...').start()
-    const success = config.performUpdate()
-    if (success) {
+    const spinner = ora('Checking for updates...\n').start()
+    const option = options.find(o => o.id === 'id:update')
+    if (!configuration || !option) {
+      spinner.fail('No configuration or option found')
+      return
+    }
+    try {
+      await executeOption(option, configuration.projectRoot)
       spinner.succeed('Project updated successfully')
-    } else {
+    } catch {
       spinner.warn('Auto-update failed, continuing...')
     }
   }
@@ -95,21 +104,14 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
         console.log(`Project root updated to: ${updated}`)
         process.exit(0)
       }
-      if (command.cmd === '__update__') {
-        spinner.stop()
-        const updateSpinner = ora('Updating Last CLI...').start()
-        const success = config.performUpdate()
-        if (success) {
-          updateSpinner.succeed('Last CLI updated successfully')
-        } else {
-          updateSpinner.fail('Update failed')
-        }
-        process.exit(0)
-      }
       if (command.cmd === '__launch_all__') {
         spinner.stop()
         launchAll(projectRoot)
         process.exit(0)
+      }
+      if (command.cmd === '__set_last_update_date__') {
+        config.saveConfig({ lastUpdateDate: new Date().toISOString() })
+        continue
       }
 
       execSync(command.cmd, {
@@ -133,6 +135,11 @@ function toCommand(commandEntry: CommandEntry, projectRoot: string): Command {
     return {
       cmd: commandEntry,
       cwd: projectRoot
+    }
+  } else if (commandEntry.cwd === '__cli_dir__') {
+    return {
+      cmd: commandEntry.cmd,
+      cwd: __dirname
     }
   } else {
     return {

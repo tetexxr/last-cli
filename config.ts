@@ -3,11 +3,7 @@ import os from 'os'
 import path from 'path'
 import inquirer from 'inquirer'
 import { Config } from './types'
-import { fileURLToPath } from 'url'
-import { execSync } from 'child_process'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 const CONFIG_PATH = path.join(os.homedir(), '.last-cli.json')
 
 export function loadConfig(): Config | null {
@@ -40,20 +36,6 @@ export function shouldAutoUpdate(config: Config | null): boolean {
   const diffInMs = now.getTime() - lastUpdate.getTime()
   const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
   return diffInDays > 30
-}
-
-export function performUpdate(): boolean {
-  try {
-    execSync('git pull origin master', {
-      stdio: 'inherit',
-      shell: '/bin/zsh',
-      cwd: __dirname
-    })
-    saveConfig({ lastUpdateDate: new Date().toISOString() })
-    return true
-  } catch {
-    return false
-  }
 }
 
 export async function promptForProjectRoot(defaultValue?: string): Promise<string> {
