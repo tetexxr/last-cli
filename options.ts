@@ -2,6 +2,7 @@ import { Option } from './types'
 
 export const options: Option[] = [
   {
+    id: 'id:delete-openapi',
     name: 'Delete OpenAPI',
     description: 'Delete all OpenAPI generated files',
     commands: [
@@ -9,6 +10,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:migrate-dev',
     name: 'Migrate dev',
     description: 'Run migrations on dev database',
     commands: [
@@ -16,6 +18,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:migrate-test',
     name: 'Migrate test',
     description: 'Run migrations on test database',
     commands: [
@@ -23,6 +26,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:recreate-dev-database',
     name: 'Recreate dev database',
     description: 'Drop and recreate dev database',
     requiresConfirmation: true,
@@ -31,6 +35,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:recreate-test-database',
     name: 'Recreate test database',
     description: 'Drop and recreate test database',
     requiresConfirmation: true,
@@ -39,6 +44,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:test',
     name: 'Test',
     description:
       'Prepare the entire setup and run all tests:' +
@@ -61,6 +67,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:launch-all',
     name: 'Launch all',
     description:
       'Launch all services and applications:' +
@@ -74,6 +81,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:tunnel-mysql',
     name: 'Tunnel MySQL',
     description: 'Create SSH tunnel to MySQL',
     commands: [
@@ -81,6 +89,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:change-project-root',
     name: 'Change project root path',
     description: 'Update the Last project root path used by this CLI',
     commands: [
@@ -88,6 +97,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:update',
     name: 'Update',
     description: 'Update the Last CLI tool from git repository',
     commands: [
@@ -95,6 +105,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:help',
     name: 'Help',
     description: 'Show all commands and their descriptions',
     commands: [
@@ -102,6 +113,7 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:exit',
     name: 'Quit',
     description: 'Exit Last CLI',
     commands: [
