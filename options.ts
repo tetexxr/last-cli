@@ -54,7 +54,7 @@ export const options: Option[] = [
       '\n  - Run migrations on test database' +
       '\n  - Generate Kysely type definitions' +
       '\n  - Generate OpenAPI client libraries' +
-      '\n  - Run unit and integration test for Server',
+      '\n  - Run all unit and integration test',
     commands: [
       { cmd: 'find . -type d -path "*/src/openapi" -exec rm -rf {} +', cwd: 'server' },
       { cmd: 'yarn install', cwd: 'server' },
@@ -63,7 +63,7 @@ export const options: Option[] = [
       'last-scripts localdb migrate test',
       { cmd: 'yarn kysely-codegen', cwd: 'server' },
       { cmd: 'yarn openapi', cwd: 'server' },
-      { cmd: 'yarn test-all', cwd: 'server' }
+      'yarn test'
     ]
   },
   {

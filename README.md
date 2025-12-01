@@ -44,7 +44,7 @@ Run `last` and pick from the menu:
   - Run migrations on test database
   - Generate Kysely type definitions
   - Generate OpenAPI client libraries
-  - Run unit and integration test for Server
+  - Run all unit and integration test
 - **Launch all**: Launch all services and applications:
   - Kafka
   - Server
