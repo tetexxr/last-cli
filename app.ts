@@ -89,27 +89,27 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
     for (const commandEntry of option.commands) {
       const command = toCommand(commandEntry, projectRoot)
 
-      if (command.cmd === '__help__') {
+      if (command.cmd === 'cmd:help') {
         spinner.stop()
         options.forEach(option => console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`))
         process.exit(0)
       }
-      if (command.cmd === '__exit__') {
+      if (command.cmd === 'cmd:exit') {
         spinner.stop()
         process.exit(0)
       }
-      if (command.cmd === '__change_project_root__') {
+      if (command.cmd === 'cmd:change-project-root') {
         spinner.stop()
         const updated = await config.promptForProjectRoot(projectRoot)
         console.log(`Project root updated to: ${updated}`)
         process.exit(0)
       }
-      if (command.cmd === '__launch_all__') {
+      if (command.cmd === 'cmd:launch-all') {
         spinner.stop()
         launchAll(projectRoot)
         process.exit(0)
       }
-      if (command.cmd === '__set_last_update_date__') {
+      if (command.cmd === 'cmd:set-last-update-date') {
         config.saveConfig({ lastUpdateDate: new Date().toISOString() })
         continue
       }

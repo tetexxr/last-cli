@@ -77,7 +77,7 @@ export const options: Option[] = [
       '\n  - Admin' +
       '\n  - POS',
     commands: [
-      '__launch_all__'
+      'cmd:launch-all'
     ]
   },
   {
@@ -93,7 +93,7 @@ export const options: Option[] = [
     name: 'Change project root path',
     description: 'Update the Last project root path used by this CLI',
     commands: [
-      '__change_project_root__'
+      'cmd:change-project-root'
     ]
   },
   {
@@ -103,7 +103,7 @@ export const options: Option[] = [
     commands: [
       { cmd: 'git pull origin master', cwd: '__cli_dir__' },
       { cmd: 'npm install', cwd: '__cli_dir__' },
-      '__set_last_update_date__'
+      'cmd:set-last-update-date'
     ]
   },
   {
@@ -111,7 +111,7 @@ export const options: Option[] = [
     name: 'Help',
     description: 'Show all commands and their descriptions',
     commands: [
-      '__help__'
+      'cmd:help'
     ]
   },
   {
@@ -119,7 +119,7 @@ export const options: Option[] = [
     name: 'Quit',
     description: 'Exit Last CLI',
     commands: [
-      '__exit__'
+      'cmd:exit'
     ]
   }
 ]
