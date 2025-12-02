@@ -25,7 +25,8 @@ export const options: Option[] = [
       { cmd: 'find . -type d -path "*/src/openapi" -exec rm -rf {} +', cwd: 'server' },
       { cmd: 'yarn install', cwd: 'server' },
       { cmd: 'yarn up', cwd: 'server' },
-      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test',
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;"',
+      'last-scripts localdb init test',
       'last-scripts localdb migrate test',
       { cmd: 'yarn kysely-codegen', cwd: 'server' },
       { cmd: 'yarn openapi', cwd: 'server' },
@@ -110,7 +111,8 @@ export const options: Option[] = [
     description: 'Drop and recreate dev database',
     requiresConfirmation: true,
     commands: [
-      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;" && last-scripts localdb init dev'
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;"',
+      'last-scripts localdb init dev'
     ]
   },
   {
@@ -119,7 +121,8 @@ export const options: Option[] = [
     description: 'Drop and recreate test database',
     requiresConfirmation: true,
     commands: [
-      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test'
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;"',
+      'last-scripts localdb init test'
     ]
   },
   {
