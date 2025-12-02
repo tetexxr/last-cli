@@ -32,11 +32,7 @@ rm -rf ~/.last-cli
 
 Run `last` and pick from the menu:
 
-- **Delete OpenAPI**: Delete all OpenAPI generated files
-- **Migrate dev**: Run migrations on dev database
-- **Migrate test**: Run migrations on test database
-- **Recreate dev database**: Drop and recreate dev database (requires confirmation)
-- **Recreate test database**: Drop and recreate test database (requires confirmation)
+- **Tunnel MySQL**: Create SSH tunnel to MySQL
 - **Test**: Prepare the entire setup and run all tests:
   - Delete OpenAPI folders
   - Install and update dependencies
@@ -51,7 +47,11 @@ Run `last` and pick from the menu:
   - Support
   - Admin
   - POS
-- **Tunnel MySQL**: Create SSH tunnel to MySQL
+- **Delete OpenAPI**: Delete all OpenAPI generated files
+- **Migrate dev**: Run migrations on dev database
+- **Migrate test**: Run migrations on test database
+- **Recreate dev database**: Drop and recreate dev database (requires confirmation)
+- **Recreate test database**: Drop and recreate test database (requires confirmation)
 - **Change project root path**: Update the Last project root path used by this CLI
 - **Update**: Update the Last CLI tool from git repository
 - **Help**: Show all commands and their descriptions
