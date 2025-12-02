@@ -2,45 +2,11 @@ import { Option } from './types'
 
 export const options: Option[] = [
   {
-    id: 'id:delete-openapi',
-    name: 'Delete OpenAPI',
-    description: 'Delete all OpenAPI generated files',
+    id: 'id:tunnel-mysql',
+    name: 'Tunnel MySQL',
+    description: 'Create SSH tunnel to MySQL',
     commands: [
-      { cmd: 'find . -type d -path "*/src/openapi" -exec rm -rf {} +', cwd: 'server' }
-    ]
-  },
-  {
-    id: 'id:migrate-dev',
-    name: 'Migrate dev',
-    description: 'Run migrations on dev database',
-    commands: [
-      'last-scripts localdb migrate dev'
-    ]
-  },
-  {
-    id: 'id:migrate-test',
-    name: 'Migrate test',
-    description: 'Run migrations on test database',
-    commands: [
-      'last-scripts localdb migrate test'
-    ]
-  },
-  {
-    id: 'id:recreate-dev-database',
-    name: 'Recreate dev database',
-    description: 'Drop and recreate dev database',
-    requiresConfirmation: true,
-    commands: [
-      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;" && last-scripts localdb init dev'
-    ]
-  },
-  {
-    id: 'id:recreate-test-database',
-    name: 'Recreate test database',
-    description: 'Drop and recreate test database',
-    requiresConfirmation: true,
-    commands: [
-      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test'
+      'last-scripts tunnel mysql'
     ]
   },
   {
@@ -81,11 +47,45 @@ export const options: Option[] = [
     ]
   },
   {
-    id: 'id:tunnel-mysql',
-    name: 'Tunnel MySQL',
-    description: 'Create SSH tunnel to MySQL',
+    id: 'id:delete-openapi',
+    name: 'Delete OpenAPI',
+    description: 'Delete all OpenAPI generated files',
     commands: [
-      'last-scripts tunnel mysql'
+      { cmd: 'find . -type d -path "*/src/openapi" -exec rm -rf {} +', cwd: 'server' }
+    ]
+  },
+  {
+    id: 'id:migrate-dev',
+    name: 'Migrate dev',
+    description: 'Run migrations on dev database',
+    commands: [
+      'last-scripts localdb migrate dev'
+    ]
+  },
+  {
+    id: 'id:migrate-test',
+    name: 'Migrate test',
+    description: 'Run migrations on test database',
+    commands: [
+      'last-scripts localdb migrate test'
+    ]
+  },
+  {
+    id: 'id:recreate-dev-database',
+    name: 'Recreate dev database',
+    description: 'Drop and recreate dev database',
+    requiresConfirmation: true,
+    commands: [
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;" && last-scripts localdb init dev'
+    ]
+  },
+  {
+    id: 'id:recreate-test-database',
+    name: 'Recreate test database',
+    description: 'Drop and recreate test database',
+    requiresConfirmation: true,
+    commands: [
+      'docker exec -it last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;" && last-scripts localdb init test'
     ]
   },
   {
