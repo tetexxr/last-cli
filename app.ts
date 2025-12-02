@@ -120,6 +120,7 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
         cwd: command.cwd
       })
     }
+    console.log('')
     spinner.succeed(`${option.name} completed`)
   } catch (error: unknown) {
     if (typeof error === 'object' && error !== null && 'signal' in error && error.signal === 'SIGINT') {
