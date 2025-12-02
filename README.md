@@ -47,6 +47,14 @@ Run `last` and pick from the menu:
   - Support
   - Admin
   - POS
+- **Start local Docker services**: Start local Docker services required for applications to work:
+  - MySql
+  - Redis
+  - Mosquitto
+  - Kafka
+  - Kafka UI
+  - CubeJS
+- **Delete local Kafka events**: Delete all Kafka events from all topics
 - **Delete OpenAPI**: Delete all OpenAPI generated files
 - **Migrate dev**: Run migrations on dev database
 - **Migrate test**: Run migrations on test database

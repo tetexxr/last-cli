@@ -47,6 +47,40 @@ export const options: Option[] = [
     ]
   },
   {
+    id: 'id:start-docker',
+    name: 'Start local Docker services',
+    description:
+      'Start local Docker services required for applications to work:' +
+      '\n  - MySql' +
+      '\n  - Redis' +
+      '\n  - Mosquitto' +
+      '\n  - Kafka' +
+      '\n  - Kafka UI' +
+      '\n  - CubeJS',
+    commands: [
+      { cmd: 'docker compose pull', cwd: 'last-dev' },
+      { cmd: 'docker compose up -d', cwd: 'last-dev' }
+    ]
+  },
+  {
+    id: 'id:delete-events',
+    name: 'Delete local Kafka events',
+    description: 'Delete all Kafka events from all topics',
+    commands: [
+      `docker exec -i last-dev-kafka-1 /opt/bitnami/kafka/bin/kafka-delete-records.sh --bootstrap-server localhost:9092 --offset-json-file /dev/stdin <<EOF
+      {
+        "partitions": [
+          { "topic": "background-tasks",  "partition": 0, "offset": -1 },
+          { "topic": "integrated-orders", "partition": 0, "offset": -1 },
+          { "topic": "internal-events",   "partition": 0, "offset": -1 },
+          { "topic": "sync-events",       "partition": 0, "offset": -1 }
+        ],
+        "version": 1
+      }
+      EOF`
+    ]
+  },
+  {
     id: 'id:delete-openapi',
     name: 'Delete OpenAPI',
     description: 'Delete all OpenAPI generated files',
