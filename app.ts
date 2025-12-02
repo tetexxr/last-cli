@@ -89,13 +89,9 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
     for (const commandEntry of option.commands) {
       const command = toCommand(commandEntry, projectRoot)
 
-      if (command.cmd === 'cmd:help') {
+      if (command.cmd === 'cmd:launch-all') {
         spinner.stop()
-        options.forEach(option => console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`))
-        process.exit(0)
-      }
-      if (command.cmd === 'cmd:exit') {
-        spinner.stop()
+        launchAll(projectRoot)
         process.exit(0)
       }
       if (command.cmd === 'cmd:change-project-root') {
@@ -104,14 +100,18 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
         console.log(`Project root updated to: ${updated}`)
         process.exit(0)
       }
-      if (command.cmd === 'cmd:launch-all') {
-        spinner.stop()
-        launchAll(projectRoot)
-        process.exit(0)
-      }
       if (command.cmd === 'cmd:set-last-update-date') {
         config.saveConfig({ lastUpdateDate: new Date().toISOString() })
         continue
+      }
+      if (command.cmd === 'cmd:help') {
+        spinner.stop()
+        options.forEach(option => console.log(`\n${chalk.white.bold(option.name)}\n  ${option.description}`))
+        process.exit(0)
+      }
+      if (command.cmd === 'cmd:exit') {
+        spinner.stop()
+        process.exit(0)
       }
 
       execSync(command.cmd, {
