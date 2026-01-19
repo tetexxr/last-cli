@@ -21,7 +21,7 @@ async function main(): Promise<void> {
 
     const { selectedOption } = await inquirer.prompt([
       {
-        type: 'list',
+        type: 'rawlist',
         name: 'selectedOption',
         message: 'Select an option to execute:',
         choices: options.map(option => ({
