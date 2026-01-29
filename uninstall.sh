@@ -2,7 +2,7 @@
 
 echo "Uninstalling Last CLI..."
 
-INSTALL_PATH="/usr/local/bin/last"
+INSTALL_PATH="/usr/local/bin/lc"
 
 # Check if the symlink exists
 if [ -L "$INSTALL_PATH" ]; then

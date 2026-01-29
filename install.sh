@@ -4,7 +4,7 @@ set -e
 
 REPO_URL="https://github.com/tetexxr/last-cli.git"
 INSTALL_DIR="$HOME/.last-cli"
-SYMLINK_PATH="/usr/local/bin/last"
+SYMLINK_PATH="/usr/local/bin/lc"
 
 echo "Installing Last CLI..."
 
@@ -37,8 +37,8 @@ sudo ln -s "$INSTALL_DIR/last.sh" "$SYMLINK_PATH"
 
 if [ -L "$SYMLINK_PATH" ]; then
     echo "\nLast CLI installed successfully."
-    echo "You can now run 'last' from anywhere in your terminal."
-    echo "Try it: last"
+    echo "You can now run 'lc' from anywhere in your terminal."
+    echo "Try it: lc"
 else
     echo "Installation failed."
     exit 1

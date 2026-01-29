@@ -18,19 +18,19 @@ To install Last CLI, run:
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/tetexxr/last-cli/master/install.sh)"
 ```
 
-- This will clone the repository to `~/.last-cli`, install dependencies, and create a symlink `last` at `/usr/local/bin/last` pointing to `~/.last-cli/last.sh`.
-- After install, run `which last` and `last` to open the menu.
+- This will clone the repository to `~/.last-cli`, install dependencies, and create a symlink `lc` at `/usr/local/bin/lc` pointing to `~/.last-cli/last.sh`.
+- After install, run `which lc` and `lc` to open the menu.
 
 ## Uninstall
 
 ```bash
-sudo rm /usr/local/bin/last
+sudo rm /usr/local/bin/lc
 rm -rf ~/.last-cli
 ```
 
 ## Usage and commands
 
-Run `last` and pick from the menu:
+Run `lc` and pick from the menu:
 
 - **Tunnel MySQL**: Create SSH tunnel to MySQL
 - **Test**: Prepare the entire setup and run all tests:
