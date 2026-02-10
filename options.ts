@@ -94,7 +94,8 @@ export const options: Option[] = [
     name: 'Migrate dev',
     description: 'Run migrations on dev database',
     commands: [
-      'last-scripts localdb migrate dev'
+      'last-scripts localdb migrate dev',
+      { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
   {
@@ -102,7 +103,8 @@ export const options: Option[] = [
     name: 'Migrate test',
     description: 'Run migrations on test database',
     commands: [
-      'last-scripts localdb migrate test'
+      'last-scripts localdb migrate test',
+      { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
   {
@@ -112,7 +114,8 @@ export const options: Option[] = [
     requiresConfirmation: true,
     commands: [
       'docker exec -i last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;"',
-      'last-scripts localdb init dev'
+      'last-scripts localdb init dev',
+      { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
   {
@@ -122,7 +125,8 @@ export const options: Option[] = [
     requiresConfirmation: true,
     commands: [
       'docker exec -i last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;"',
-      'last-scripts localdb init test'
+      'last-scripts localdb init test',
+      { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
   {
