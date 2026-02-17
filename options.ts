@@ -113,8 +113,7 @@ export const options: Option[] = [
     description: 'Drop and recreate dev database',
     requiresConfirmation: true,
     commands: [
-      'docker exec -i last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_dev;"',
-      'last-scripts localdb init dev',
+      'last-scripts localdb reset dev',
       { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
@@ -124,8 +123,7 @@ export const options: Option[] = [
     description: 'Drop and recreate test database',
     requiresConfirmation: true,
     commands: [
-      'docker exec -i last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;"',
-      'last-scripts localdb init test',
+      'last-scripts localdb reset test',
       { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
