@@ -26,8 +26,8 @@ export const options: Option[] = [
       { cmd: 'yarn install', cwd: 'server' },
       { cmd: 'yarn up', cwd: 'server' },
       'docker exec -i last-dev-mysql-1 mysql -u root -plast -e "DROP DATABASE IF EXISTS last_test;"',
-      'last-scripts localdb init test',
-      'last-scripts localdb migrate test',
+      { cmd: 'yarn db init test', cwd: 'server' },
+      { cmd: 'yarn db migrate test', cwd: 'server' },
       { cmd: 'yarn kysely-codegen', cwd: 'server' },
       { cmd: 'yarn openapi', cwd: 'server' },
       'yarn test'
@@ -94,7 +94,7 @@ export const options: Option[] = [
     name: 'Migrate dev',
     description: 'Run migrations on dev database',
     commands: [
-      'last-scripts localdb migrate dev',
+      { cmd: 'yarn db migrate dev', cwd: 'server' },
       { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
@@ -103,7 +103,7 @@ export const options: Option[] = [
     name: 'Migrate test',
     description: 'Run migrations on test database',
     commands: [
-      'last-scripts localdb migrate test',
+      { cmd: 'yarn db migrate test', cwd: 'server' },
       { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
@@ -113,7 +113,7 @@ export const options: Option[] = [
     description: 'Drop and recreate dev database',
     requiresConfirmation: true,
     commands: [
-      'last-scripts localdb reset dev',
+      { cmd: 'yarn db reset dev', cwd: 'server' },
       { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
@@ -123,7 +123,7 @@ export const options: Option[] = [
     description: 'Drop and recreate test database',
     requiresConfirmation: true,
     commands: [
-      'last-scripts localdb reset test',
+      { cmd: 'yarn db reset test', cwd: 'server' },
       { cmd: 'yarn kysely-codegen', cwd: 'server' }
     ]
   },
