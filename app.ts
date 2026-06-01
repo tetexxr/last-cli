@@ -4,7 +4,7 @@ import path from 'path'
 
 import inquirer from 'inquirer'
 import ora from 'ora'
-import { Command, CommandEntry, Config, Option } from './types'
+import type { Command, CommandEntry, Config, Option } from './types'
 import chalk from 'chalk'
 import { options } from './options'
 import * as config from './config'
@@ -57,7 +57,7 @@ async function loadConfiguration(): Promise<Config> {
 
 async function autoUpdate(configuration: Config | null): Promise<void> {
   if (config.shouldAutoUpdate(configuration)) {
-    const spinner = ora('Checking for updates...\n').start()
+    const spinner = ora({ text: 'Checking for updates...\n', discardStdin: false }).start()
     const option = options.find(o => o.id === 'id:update')
     if (!configuration || !option) {
       spinner.fail('No configuration or option found')
@@ -84,7 +84,9 @@ async function executeOption(option: Option, projectRoot: string): Promise<void>
     }
   }
 
-  const spinner = ora(`Executing: ${option.name}\n`).start()
+  // discardStdin:false keeps the terminal in cooked mode so Ctrl+C still
+  // generates a real SIGINT for long-running commands (e.g. the tunnel).
+  const spinner = ora({ text: `Executing: ${option.name}\n`, discardStdin: false }).start()
   try {
     for (const commandEntry of option.commands) {
       const command = toCommand(commandEntry, projectRoot)

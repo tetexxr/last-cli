@@ -2,7 +2,7 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import inquirer from 'inquirer'
-import { Config } from './types'
+import type { Config } from './types'
 
 const CONFIG_PATH = path.join(os.homedir(), '.last-cli.json')
 
@@ -50,9 +50,7 @@ export async function promptForProjectRoot(defaultValue?: string): Promise<strin
           return 'Path cannot be empty'
         }
         try {
-          const expandedPath = input.startsWith('~')
-            ? path.join(os.homedir(), input.slice(1))
-            : input
+          const expandedPath = input.startsWith('~') ? path.join(os.homedir(), input.slice(1)) : input
           const stat = fs.statSync(expandedPath)
           if (!stat.isDirectory()) {
             return 'Path must be a directory'
@@ -64,9 +62,7 @@ export async function promptForProjectRoot(defaultValue?: string): Promise<strin
       }
     }
   ])
-  const expandedPath = projectRoot.startsWith('~')
-    ? path.join(os.homedir(), projectRoot.slice(1))
-    : projectRoot
+  const expandedPath = projectRoot.startsWith('~') ? path.join(os.homedir(), projectRoot.slice(1)) : projectRoot
   saveConfig({ projectRoot: expandedPath })
   return expandedPath
 }

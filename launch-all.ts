@@ -1,7 +1,7 @@
-import { ChildProcess, execSync, spawn } from 'child_process'
+import { type ChildProcess, execSync, spawn } from 'child_process'
 import { fileURLToPath } from 'url'
 import path from 'path'
-import readline, { Key } from 'readline'
+import readline, { type Key } from 'readline'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -56,7 +56,9 @@ export function launchAll(projectRoot: string): void {
     console.log('  • Admin')
     console.log('  • POS')
   } catch (error) {
-    throw new Error(`Failed to launch iTerm: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    throw new Error(`Failed to launch iTerm: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+      cause: error
+    })
   }
 }
 
