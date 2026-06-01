@@ -56,7 +56,9 @@ export function launchAll(projectRoot: string): void {
     console.log('  • Admin')
     console.log('  • POS')
   } catch (error) {
-    throw new Error(`Failed to launch iTerm: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    throw new Error(`Failed to launch iTerm: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+      cause: error
+    })
   }
 }
 

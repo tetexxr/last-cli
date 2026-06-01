@@ -5,12 +5,14 @@ Interactive CLI to run common Last tasks from anywhere.
 ## Prerequisites
 
 Install node.js
+
 ```bash
 brew install node@24
 echo 'export PATH="/opt/homebrew/opt/node@24/bin:$PATH"' >> ~/.zshrc
 ```
 
 Install `last-tools` and make sure the folder containing its binary is in your `PATH`. The CLI relies on it for some options (e.g. **Tunnel MySQL**), so the binary must be reachable from anywhere.
+
 ```bash
 echo $PATH | grep <last-tools-folder>            # verify the folder is present
 echo 'export PATH="<last-tools-folder>:$PATH"' >> ~/.zshrc
@@ -79,22 +81,23 @@ The application automatically updates itself when it starts up if it has been on
 ## Troubleshooting
 
 Command not found: ensure `/usr/local/bin` is in `PATH`.
+
 ```bash
 echo $PATH | grep /usr/local/bin    # to verify if is present
 export PATH="/usr/local/bin:$PATH"  # add to .zshrc
 source ~/.zshrc                     # reload .zshrc
 ```
 
-
 `last-tools` command not found: ensure the folder containing the `last-tools` binary is in `PATH` (see Prerequisites).
 
-
 Permission denied: make scripts executable.
+
 ```bash
 chmod +x ~/.last-cli/*.sh
 ```
 
 Dependencies missing: install npm packages.
+
 ```bash
 cd ~/.last-cli
 npm install
