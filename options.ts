@@ -6,7 +6,7 @@ export const options: Option[] = [
     name: 'Tunnel MySQL',
     description: 'Create SSH tunnel to MySQL',
     commands: [
-      'last-scripts tunnel mysql'
+      'last-tools-darwin-arm64 tunnel mysql'
     ]
   },
   {
