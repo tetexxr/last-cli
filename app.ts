@@ -4,7 +4,7 @@ import path from 'path'
 
 import inquirer from 'inquirer'
 import ora from 'ora'
-import { Command, CommandEntry, Config, Option } from './types'
+import type { Command, CommandEntry, Config, Option } from './types'
 import chalk from 'chalk'
 import { options } from './options'
 import * as config from './config'

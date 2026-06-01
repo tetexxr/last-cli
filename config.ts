@@ -2,7 +2,7 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import inquirer from 'inquirer'
-import { Config } from './types'
+import type { Config } from './types'
 
 const CONFIG_PATH = path.join(os.homedir(), '.last-cli.json')
 

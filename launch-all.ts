@@ -1,7 +1,7 @@
-import { ChildProcess, execSync, spawn } from 'child_process'
+import { type ChildProcess, execSync, spawn } from 'child_process'
 import { fileURLToPath } from 'url'
 import path from 'path'
-import readline, { Key } from 'readline'
+import readline, { type Key } from 'readline'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
