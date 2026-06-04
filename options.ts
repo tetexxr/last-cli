@@ -42,7 +42,8 @@ export const options: Option[] = [
       '\n  - Server' +
       '\n  - Support' +
       '\n  - Admin' +
-      '\n  - POS',
+      '\n  - POS' +
+      '\n  - KDS',
     commands: [
       'cmd:launch-all'
     ]
