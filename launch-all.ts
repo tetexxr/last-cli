@@ -37,12 +37,17 @@ export function launchAll(projectRoot: string): void {
       tell current session of current window to write text "cd ${projectRoot}/kds && yarn dev"
       set tb6 to current session of current window
 
+      tell current window to create tab with default profile
+      tell current session of current window to write text "cd ${projectRoot}/storefront && yarn dev"
+      set tb7 to current session of current window
+
       tell tb1 to set name to "Kafka"
       tell tb2 to set name to "Server"
       tell tb3 to set name to "Support"
       tell tb4 to set name to "Admin"
       tell tb5 to set name to "POS"
       tell tb6 to set name to "KDS"
+      tell tb7 to set name to "Storefront"
     end tell
   `
 
@@ -61,6 +66,7 @@ export function launchAll(projectRoot: string): void {
     console.log('  • Admin')
     console.log('  • POS')
     console.log('  • KDS')
+    console.log('  • Storefront')
   } catch (error) {
     throw new Error(`Failed to launch iTerm: ${error instanceof Error ? error.message : 'Unknown error'}`, {
       cause: error
